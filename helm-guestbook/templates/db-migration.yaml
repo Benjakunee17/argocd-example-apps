@@ -6,15 +6,17 @@ metadata:
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
-backoffLimit: 2
+  backoffLimit: 2
   template:
+    metadata:
+      labels:
+        app: db-migration-job
     spec:
       restartPolicy: Never
       containers:
         - name: migration
           image: busybox
           command:
-            -  "sh"
-            -  "-c"
-            -  "echo 'Running db migration...'; sleep 10; echo 'Done!'"
-          
+            - sh
+            - -c
+            - "echo 'Running db migration...'; sleep 10; echo 'Done!'"
